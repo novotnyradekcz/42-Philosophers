@@ -6,13 +6,13 @@
 #    By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/05 18:11:10 by rnovotny          #+#    #+#              #
-#    Updated: 2024/05/05 18:30:49 by rnovotny         ###   ########.fr        #
+#    Updated: 2024/05/19 14:11:29 by rnovotny         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-SRCS = src/main.c
+SRCS = src/main.c src/utils.c
 
 OBJS := ${SRCS:.c=.o}
 
