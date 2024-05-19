@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:30:06 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 19:37:27 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:30:34 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,19 @@ int	ft_atoi(const char *nptr)
 		i++;
 	}
 	if (res > 2147483647)
-		return -1;
-	return neg * res;
+		return (-1);
+	return (neg * res);
+}
+
+int	ft_usleep(size_t ms)
+{
+	size_t	start;
+
+	start = get_time();
+	while (get_time() - start < ms)
+		if (usleep(500) == -1)
+			write(2, "Error in usleep() function\n", 29);
+	return (0);
 }
 
 size_t	get_time(void)

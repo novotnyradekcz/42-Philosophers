@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 19:01:12 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 20:14:55 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:49:39 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	check_if_dead(t_program *program, t_philo *philos)
 		pthread_mutex_unlock(philos[i].meal_lock);
 		if (dead)
 		{
-			print_message("died", &philos[i], philos[i].id);
+			log_message("died", &philos[i], philos[i].id);
 			pthread_mutex_lock(philos[0].dead_lock);
 			*philos->dead = 1;
 			pthread_mutex_unlock(philos[0].dead_lock);
@@ -42,6 +42,7 @@ int	check_if_all_ate(t_program *program, t_philo *philos)
 	int	i;
 	int	finished_eating;
 
+	printf("Start of check_if_all_ate\n");	// TODO: delete
 	i = 0;
 	finished_eating = 0;
 	if (program->num_times_to_eat == -1)
@@ -94,22 +95,22 @@ int	create_threads(t_program *program, pthread_mutex_t *forks)
 	pthread_t	observer;
 	int			i;
 
-	if (pthread_create(&observer, NULL, &monitor, program->philos) != 0)
+	if (pthread_create(&observer, NULL, &monitor, program->philos))
 		destory_all("Thread creation failed.\n", program, forks);
 	i = 0;
 	while (i < program->num_of_philos)
 	{
 		if (pthread_create(&program->philos[i].thread, NULL, &philo_loop,
-				&program->philos[i]) != 0)
+				&program->philos[i]))
 			destory_all("Thread creation failed.\n", program, forks);
 		i++;
 	}
 	i = 0;
-	if (pthread_join(observer, NULL) != 0)
+	if (pthread_join(observer, NULL))
 		destory_all("Thread join failed.\n", program, forks);
 	while (i < program->num_of_philos)
 	{
-		if (pthread_join(program->philos[i].thread, NULL) != 0)
+		if (pthread_join(program->philos[i].thread, NULL))
 			destory_all("Thread join error.\n", program, forks);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:16:40 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 20:15:05 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:32:25 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define PHILO_H
 
 # include <pthread.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
@@ -24,6 +25,7 @@ typedef struct s_philo
 	int				id;
 	int				eating;
 	int				meals_eaten;
+	size_t			start_time;
 	size_t			last_meal;
 	size_t			time_to_die;
 	size_t			time_to_eat;
@@ -40,7 +42,6 @@ typedef struct s_philo
 typedef struct s_program
 {
 	int				dead_flag;
-	size_t			start_time;
 	int				num_of_philos;
 	int				num_times_to_eat;
 	pthread_mutex_t	dead_lock;
@@ -52,7 +53,7 @@ typedef struct s_program
 int		main(int argc, char **argv);
 int		check_input(int argc, char **argv);
 void	init_program(t_program *program, t_philo *philos,
-		pthread_mutex_t *forks, char **argv);
+			pthread_mutex_t *forks, char **argv);
 void	init_philos(t_program *program, pthread_mutex_t *forks, char **argv);
 void	*monitor(void *pointer);
 
@@ -65,10 +66,11 @@ int		check_if_dead(t_program *program, t_philo *philos);
 void	eat(t_philo *philo);
 void	snooze(t_philo *philo);
 void	think(t_philo *philo);
-void	log_message(char *str, t_program *program, t_philo *philo, int id);
+void	log_message(char *str, t_philo *philo, int id);
 
 size_t	ft_strlen(const char *str);
 int		ft_atoi(const char *nptr);
+int		ft_usleep(size_t ms);
 size_t	get_time(void);
 void	destory_all(char *str, t_program *program, pthread_mutex_t *forks);
 
