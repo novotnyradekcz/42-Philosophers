@@ -6,11 +6,21 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:30:06 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 16:51:32 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:37:27 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	ft_strlen(const char *str)
+{
+	int	n;
+
+	n = 0;
+	while (str[n] != 0)
+		n++;
+	return (n);
+}
 
 int	ft_atoi(const char *nptr)
 {
@@ -46,4 +56,23 @@ size_t	get_time(void)
 	if (gettimeofday(&time, NULL) == -1)
 		write(2, "Error in gettimeofday() function\n", 33);
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
+{
+	int	i;
+
+	i = 0;
+	if (str)
+		write(2, str, ft_strlen(str));
+	pthread_mutex_destroy(&program->write_lock);
+	pthread_mutex_destroy(&program->meal_lock);
+	pthread_mutex_destroy(&program->dead_lock);
+	while (i < program->num_of_philos)
+	{
+		pthread_mutex_destroy(&forks[i]);
+		i++;
+	}
+	free(program->philos);
+	free(forks);
 }

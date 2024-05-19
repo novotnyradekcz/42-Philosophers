@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:16:40 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 18:21:32 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 19:51:04 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,26 @@ typedef struct s_program
 	t_philo			*philos;
 }					t_program;
 
-int	main(int argc, char **argv);
+int		main(int argc, char **argv);
+int		check_input(int argc, char **argv);
+void	init_program(t_program *program, t_philo *forks, char **argv);
+void	init_philos(t_program *program, t_philo *philos, pthread_mutex_t *forks, char **argv);
+void	*monitor(void *pointer);
 
+int		create_threads(t_program *program, pthread_mutex_t *forks);
+void	*philo_routine(void *pointer);
+int		dead_loop(t_philo *philo);
+int		check_if_all_ate(t_program *program, t_philo *philos);
+int		check_if_dead(t_program *program, t_philo *philos);
 
-// utils:
-int	ft_atoi(const char *nptr);
+void	eat(t_program *program, t_philo *philo);
+void	snooze(t_program *program, t_philo *philo);
+void	think(t_program *program, t_philo *philo);
+void	log_message(char *str, t_program *program, t_philo *philo, int id);
+
+size_t	ft_strlen(const char *str);
+int		ft_atoi(const char *nptr);
+size_t	get_time(void);
+void	destory_all(char *str, t_program *program, pthread_mutex_t *forks);
 
 #endif
