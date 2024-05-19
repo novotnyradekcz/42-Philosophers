@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:15:50 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 18:24:18 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 18:41:06 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,6 @@ int	main(int argc, char **argv)
 	philos = malloc(argv[1] * sizeof(t_philo));
 	forks = malloc(argv[1] * sizeof(pthread_mutex_t));
 	init_program(&program, philos, forks, ft_atoi(argv[1]));
-	iinit_philos(philos, &program, forks, argv);
+	init_philos(philos, &program, forks, argv);
 	return 0;
 }
