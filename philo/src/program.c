@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 19:01:12 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 19:34:04 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/19 20:14:55 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	check_if_dead(t_program *program, t_philo *philos)
 	while (i < program->num_of_philos)
 	{
 		pthread_mutex_lock(philos[i].meal_lock);
-		dead = get_time() - philos[i].last_meal >= program->time_to_die
+		dead = get_time() - philos[i].last_meal >= philos[i].time_to_die
 			&& !philos[i].eating;
 		pthread_mutex_unlock(philos[i].meal_lock);
 		if (dead)
@@ -73,7 +73,7 @@ int	dead_loop(t_philo *philo)
 	return (0);
 }
 
-void	*philo_routine(void *pointer)
+void	*philo_loop(void *pointer)
 {
 	t_philo	*philo;
 
@@ -83,7 +83,7 @@ void	*philo_routine(void *pointer)
 	while (!dead_loop(philo))
 	{
 		eat(philo);
-		dream(philo);
+		snooze(philo);
 		think(philo);
 	}
 	return (pointer);
@@ -99,7 +99,7 @@ int	create_threads(t_program *program, pthread_mutex_t *forks)
 	i = 0;
 	while (i < program->num_of_philos)
 	{
-		if (pthread_create(&program->philos[i].thread, NULL, &philo_routine,
+		if (pthread_create(&program->philos[i].thread, NULL, &philo_loop,
 				&program->philos[i]) != 0)
 			destory_all("Thread creation failed.\n", program, forks);
 		i++;
