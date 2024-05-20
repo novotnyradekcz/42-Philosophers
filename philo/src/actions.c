@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 18:42:05 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 20:31:55 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:17:51 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	log_message(char *str, t_philo *philo, int id)
 	size_t	time;
 
 	pthread_mutex_lock(philo->write_lock);
-	time = get_time() - philo->start_time;
+	time = ft_gettimeofday() - philo->start_time;
 	if (!dead_loop(philo))
 		printf("%zu %d %s\n", time, id, str);
 	pthread_mutex_unlock(philo->write_lock);
@@ -49,7 +49,7 @@ void	eat(t_philo *philo)
 	philo->eating = 1;
 	log_message("is eating", philo, philo->id);
 	pthread_mutex_lock(philo->meal_lock);
-	philo->last_meal = get_time();
+	philo->last_meal = ft_gettimeofday();
 	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->meal_lock);
 	ft_usleep(philo->time_to_eat);

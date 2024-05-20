@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:30:06 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 20:30:34 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:34:30 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,41 +49,44 @@ int	ft_atoi(const char *nptr)
 	return (neg * res);
 }
 
-int	ft_usleep(size_t ms)
-{
-	size_t	start;
-
-	start = get_time();
-	while (get_time() - start < ms)
-		if (usleep(500) == -1)
-			write(2, "Error in usleep() function\n", 29);
-	return (0);
-}
-
-size_t	get_time(void)
-{
-	struct timeval	time;
-
-	if (gettimeofday(&time, NULL) == -1)
-		write(2, "Error in gettimeofday() function\n", 33);
-	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-}
-
 void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
 {
 	int	i;
 
 	i = 0;
 	if (str)
+	{
 		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
+	}
 	pthread_mutex_destroy(&program->write_lock);
 	pthread_mutex_destroy(&program->meal_lock);
 	pthread_mutex_destroy(&program->dead_lock);
-	while (i < program->num_of_philos)
+	while (i < program->philos[0].num_of_philos)
 	{
 		pthread_mutex_destroy(&forks[i]);
 		i++;
 	}
 	free(program->philos);
 	free(forks);
+}
+
+int	ft_usleep(size_t ms)
+{
+	size_t	start;
+
+	start = ft_gettimeofday();
+	while (ft_gettimeofday() - start < ms)
+		if (usleep(500) == -1)
+			write(2, "Error in usleep() function\n", 29);
+	return (0);
+}
+
+size_t	ft_gettimeofday(void)
+{
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) == -1)
+		write(2, "Error in gettimeofday() function\n", 33);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }

@@ -6,23 +6,23 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 19:01:12 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/19 20:49:39 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:18:48 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_if_dead(t_program *program, t_philo *philos)
+int	check_if_dead(t_philo *philos)
 {
 	int	i;
-	int	dead;
+	int dead;
 
 	i = 0;
-	while (i < program->num_of_philos)
+	while (i < philos[0].num_of_philos)
 	{
 		pthread_mutex_lock(philos[i].meal_lock);
-		dead = get_time() - philos[i].last_meal >= philos[i].time_to_die
-			&& !philos[i].eating;
+		dead = ft_gettimeofday() - philos[i].last_meal >= philos[i].time_to_die
+			&& philos[i].eating == 0;
 		pthread_mutex_unlock(philos[i].meal_lock);
 		if (dead)
 		{
@@ -37,25 +37,24 @@ int	check_if_dead(t_program *program, t_philo *philos)
 	return (0);
 }
 
-int	check_if_all_ate(t_program *program, t_philo *philos)
+int	check_if_all_ate(t_philo *philos)
 {
 	int	i;
 	int	finished_eating;
 
-	printf("Start of check_if_all_ate\n");	// TODO: delete
 	i = 0;
 	finished_eating = 0;
-	if (program->num_times_to_eat == -1)
+	if (philos[0].num_times_to_eat == -1)
 		return (0);
-	while (i < program->num_of_philos)
+	while (i < philos[0].num_of_philos)
 	{
 		pthread_mutex_lock(philos[i].meal_lock);
-		if (philos[i].meals_eaten >= program->num_times_to_eat)
+		if (philos[i].meals_eaten >= philos[i].num_times_to_eat)
 			finished_eating++;
 		pthread_mutex_unlock(philos[i].meal_lock);
 		i++;
 	}
-	if (finished_eating == program->num_of_philos)
+	if (finished_eating == philos[0].num_of_philos)
 	{
 		pthread_mutex_lock(philos[0].dead_lock);
 		*philos->dead = 1;
@@ -65,54 +64,13 @@ int	check_if_all_ate(t_program *program, t_philo *philos)
 	return (0);
 }
 
-int	dead_loop(t_philo *philo)
+void	*monitor(void *pointer)
 {
-	pthread_mutex_lock(philo->dead_lock);
-	if (*philo->dead == 1)
-		return (pthread_mutex_unlock(philo->dead_lock), 1);
-	pthread_mutex_unlock(philo->dead_lock);
-	return (0);
-}
+	t_philo	*philos;
 
-void	*philo_loop(void *pointer)
-{
-	t_philo	*philo;
-
-	philo = (t_philo *)pointer;
-	if (philo->id % 2 == 0)
-		ft_usleep(1);
-	while (!dead_loop(philo))
-	{
-		eat(philo);
-		snooze(philo);
-		think(philo);
-	}
+	philos = (t_philo *)pointer;
+	while (1)
+		if (check_if_dead(philos) == 1 || check_if_all_ate(philos) == 1)
+			break ;
 	return (pointer);
-}
-
-int	create_threads(t_program *program, pthread_mutex_t *forks)
-{
-	pthread_t	observer;
-	int			i;
-
-	if (pthread_create(&observer, NULL, &monitor, program->philos))
-		destory_all("Thread creation failed.\n", program, forks);
-	i = 0;
-	while (i < program->num_of_philos)
-	{
-		if (pthread_create(&program->philos[i].thread, NULL, &philo_loop,
-				&program->philos[i]))
-			destory_all("Thread creation failed.\n", program, forks);
-		i++;
-	}
-	i = 0;
-	if (pthread_join(observer, NULL))
-		destory_all("Thread join failed.\n", program, forks);
-	while (i < program->num_of_philos)
-	{
-		if (pthread_join(program->philos[i].thread, NULL))
-			destory_all("Thread join error.\n", program, forks);
-		i++;
-	}
-	return (0);
 }
