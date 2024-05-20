@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:16:40 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:52:36 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:10:00 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int		dead_loop(t_philo *philo);
 void	init_program(t_program *program, t_philo *philos);
 void	init_forks(pthread_mutex_t *forks, int philo_num);
 void	init_philos(t_philo *philos, t_program *program, pthread_mutex_t *forks,
-		char **argv);
+			char **argv);
 void	init_input(t_philo *philo, char **argv);
 int		thread_create_join(t_program *program, pthread_mutex_t *forks);
 

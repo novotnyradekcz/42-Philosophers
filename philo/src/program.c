@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 19:01:12 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:18:48 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:10:17 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_if_dead(t_philo *philos)
 {
 	int	i;
-	int dead;
+	int	dead;
 
 	i = 0;
 	while (i < philos[0].num_of_philos)
