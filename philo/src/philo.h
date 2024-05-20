@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:16:40 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:45:38 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/20 18:52:36 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
-
-# define PHILO_MAX 300
 
 typedef struct s_philo
 {
