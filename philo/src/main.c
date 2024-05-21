@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:15:50 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:44:55 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/21 11:03:56 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_input(int argc, char **argv)
 	if (argc > 5 && ft_atoi(argv[5]) < 0)
 	{
 		write(2, "Number of times each philosopher must eat ", 42);
-		return (write(2, "must be a non-negative int.\n", 36));
+		return (write(2, "must be a non-negative int.\n", 28));
 	}
 	return (0);
 }
