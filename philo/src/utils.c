@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 12:30:06 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:34:30 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:15:56 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_atoi(const char *nptr)
 	return (neg * res);
 }
 
-void	destory_all(char *str, t_program *program, pthread_mutex_t *forks)
+void	destroy_all(char *str, t_program *program, pthread_mutex_t *forks)
 {
 	int	i;
 

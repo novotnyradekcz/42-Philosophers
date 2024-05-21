@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:15:50 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/21 11:03:56 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:16:23 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,6 @@ int	main(int argc, char **argv)
 	init_forks(forks, ft_atoi(argv[1]));
 	init_philos(philos, &program, forks, argv);
 	thread_create_join(&program, forks);
-	destory_all(NULL, &program, forks);
+	destroy_all(NULL, &program, forks);
 	return (0);
 }

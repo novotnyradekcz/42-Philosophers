@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 23:16:39 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 18:12:51 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:19:46 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@ int	thread_create_join(t_program *program, pthread_mutex_t *forks)
 	int			i;
 
 	if (pthread_create(&observer, NULL, &monitor, program->philos) != 0)
-		destory_all("Thread creation error", program, forks);
+		destroy_all("Error in pthread_create() - observer", program, forks);
 	i = 0;
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_create(&program->philos[i].thread, NULL, &philo_loop,
 				&program->philos[i]) != 0)
-			destory_all("Thread creation error", program, forks);
+			destroy_all("Error in pthread_create() - philos", program, forks);
 		i++;
 	}
 	i = 0;
 	if (pthread_join(observer, NULL) != 0)
-		destory_all("Thread join error", program, forks);
+		destroy_all("Error in pthread_join() - observer", program, forks);
 	while (i < program->philos[0].num_of_philos)
 	{
 		if (pthread_join(program->philos[i].thread, NULL) != 0)
-			destory_all("Thread join error", program, forks);
+			destroy_all("Error in pthread_join() - philos", program, forks);
 		i++;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rnovotny <rnovotny@student.42prague.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 18:16:40 by rnovotny          #+#    #+#             */
-/*   Updated: 2024/05/20 19:10:00 by rnovotny         ###   ########.fr       */
+/*   Updated: 2024/05/21 15:16:02 by rnovotny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	log_message(char *str, t_philo *philo, int id);
 
 size_t	ft_gettimeofday(void);
 int		ft_usleep(size_t milliseconds);
-void	destory_all(char *str, t_program *program, pthread_mutex_t *forks);
+void	destroy_all(char *str, t_program *program, pthread_mutex_t *forks);
 int		ft_atoi(const char *nptr);
 size_t	ft_strlen(const char *str);
 
